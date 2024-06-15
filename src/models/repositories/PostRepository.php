@@ -1,34 +1,48 @@
 <?php
 abstract class PostRepository extends Db
 {
-    private static function request($request)
+    private static function prepareAndExecute($query, $params = [])
     {
-        $result = self::getInstance()->query($request);
-        return $result;
+        $stmt = self::getInstance()->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
     }
-
     public static function getPosts()
     {
-        return self::request("SELECT * FROM Post ")->fetchAll(PDO::FETCH_ASSOC);
+        $query = "SELECT * FROM Post";
+        return self::prepareAndExecute($query)->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public static function getPostByid($id)
+    public static function getPostById($id)
     {
-        return self::request("SELECT * FROM Post WHERE id=".$id)->fetch(PDO::FETCH_ASSOC);
+        $query = "SELECT * FROM Post WHERE id = :id";
+        $params = ['id' => $id];
+        return self::prepareAndExecute($query, $params)->fetch(PDO::FETCH_ASSOC);
     }
-
-
     public static function insertIntoDb(Post $post)
     {
-        return self::request("INSERT INTO post (title, message, author) VALUES ('" . $post->getTitle() . "', '" . $post->getMessage() . "', '" . $post->getAuthor() . "')");
+        $query = "INSERT INTO post (title, message, author) VALUES (:title, :message, :author)";
+        $params = [
+            'title' => $post->getTitle(),
+            'message' => $post->getMessage(),
+            'author' => $post->getAuthor()
+        ];
+        return self::prepareAndExecute($query, $params);
     }
     public static function updatePost(Post $post)
     {
-        return self::request("UPDATE post SET title ='" . $post->getTitle() . "', message='" . $post->getMessage() . "' WHERE id=".$post->getId());
+        $query = "UPDATE post SET title = :title, message = :message WHERE id = :id";
+        $params = [
+            'title' => $post->getTitle(),
+            'message' => $post->getMessage(),
+            'id' => $post->getId()
+        ];
+        return self::prepareAndExecute($query, $params);
     }
     public static function deletePost(Post $post)
     {
-        return self::request("DELETE FROM Post WHERE id =" . $post->getId());
+        $query = "DELETE FROM Post WHERE id = :id";
+        $params = ['id' => $post->getId()];
+        return self::prepareAndExecute($query, $params);
     }
 }
 ?>

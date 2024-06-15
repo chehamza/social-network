@@ -1,51 +1,55 @@
 <?php
-
-class Post extends PostRepository{
+class Post extends PostRepository
+{
     private $id;
     private $title;
-    private $content;
-    private $authorId;
-    
+    private $message;
+    private $author;
 
-    public function __construct($title, $content, $authorId, $id=null ) {
-        $this->id = $id;
+    public function __construct($id, $title, $message, $author)
+    {
+        $this->id = ($id);
         $this->setTitle($title);
-        $this->setContent($content);
-        $this->setAuthorId($authorId);
-        
+        $this->setMessage($message);
+        $this->setAuthor($author);
     }
-
-    // Getters
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
-
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
+    public function setTitle($title)
+    {
+        if (preg_match("/^[A-Za-z][^<>]{1,50}$/", $title) ) {
+            return $this->title = htmlspecialchars($title);
+        } else {
+            throw new Exception ('Veuillez rentrer un titre valide',1);
+            
+        }
 
-    public function getContent() {
-        return $this->content;
     }
-
-    public function getAuthorId() {
-        return $this->authorId;
+    public function getMessage()
+    {
+        return $this->message;
     }
-
-
-    // Setters
-    public function setTitle($title) {
-        $this->title = $title;
+    public function setMessage($message)
+    {
+        if (preg_match("/^[A-Za-z][^<>]{1,300}$/", $message)) {
+           return $this->message = htmlspecialchars($message);
+        } else {
+            throw new Exception ('Veuillez rentrer un message valide',2); 
+        }
     }
-
-    public function setContent($content) {
-        $this->content = $content;
+    public function getAuthor()
+    {
+        return $this->author;
     }
-
-    public function setAuthorId($authorId) {
-        $this->authorId = $authorId;
+    public function setAuthor($author)
+    {
+        $this->author = htmlspecialchars($author);
     }
-
 }
-
-
+?>

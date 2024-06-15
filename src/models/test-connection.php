@@ -30,7 +30,7 @@ echo $result;
             <input type="text" id="title" name="title" required>
 
             <label for="contenu">Contenu :</label>
-            <textarea id="contenu" name="content" rows="5" required></textarea>
+            <textarea id="contenu" name="message" rows="5" required></textarea>
 
             <button type="submit" name="create">Publier</button>
         </form>

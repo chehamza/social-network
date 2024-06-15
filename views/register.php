@@ -2,41 +2,43 @@
 <html lang="fr">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link  href="/assets/css/style.css"  rel="stylesheet" >
-    <title>Inscription</title>
-    
+    <title>The Social Network - Subscribe</title>
 </head>
 
 <body>
+    <header>
+        <h1>The Social Network</h1>
+    </header>
     <main>
-
-        <h2>Inscription</h2>
-        <form action="" method="POST">
-            <div>
-                <label for="name">Nom:</label>
-                <input type="text" id="name" name="name" placeholder="enter your name">
-            </div>
-            <div>
-                <label for="firstName">Prénom:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="enter your firstName" required>
-            </div>  
-
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="enter your email"required>
-            </div>
-            <div>
-                <label for="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" placeholder="enter your password" required>
-            </div>
-
-            <button type="submit" name="submit">Valider</button>
-            <button> <a href="http://localhost:8000/login">login</button>
-        </form>
+        <section>
+            <h2>Subscribe</h2>
+            <form method="POST">
+                <label for="name">Nom : </label>
+                <input id="name" type="text" name="name"><br>
+                <?php if (isset ($errorName)) {
+                    echo "<p>" . $errorName . "</p>";
+                } ?>
+                <label for="firstname">Prénom : </label>
+                <input id="firstname" type="text" name="firstname"><br>
+                <?php if (isset ($errorFirstname)) {
+                    echo "<p>" . $errorFirstname . "</p>";
+                } ?>
+                <label for="mail">Email : </label>
+                <input id="mail" type="text" name="mail"><br>
+                <?php if (isset ($errorMail)) {
+                    echo "<p>" . $errorMail . "</p>";
+                } ?>
+                <label for="password">Mot de passe: </label>
+                <input id="password" type="text" name="password"><br>
+                <?php if (isset ($errorPassword)) {
+                    echo "<p>" . $errorPassword . "</p>";
+                } ?>
+                <button name="addNewUser" type="submit">S'inscrire</button>
+            </form>
+        </section>
     </main>
-
 </body>
 
 </html>

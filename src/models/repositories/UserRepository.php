@@ -1,23 +1,34 @@
 <?php
 abstract class UserRepository extends Db
 {
-    private static function request($request)
+    private static function prepareAndExecute($query, $params = [])
     {
-        return self::getInstance()->query($request);
+        $stmt = self::getInstance()->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
     }
     public static function getUserByMail($mail)
     {
-        return self::request("SELECT * FROM user WHERE mail= '$mail'")->fetch(PDO::FETCH_ASSOC);
+        $query = "SELECT * FROM user WHERE mail = :mail";
+        $params = ['mail' => $mail];
+        return self::prepareAndExecute($query, $params)->fetch(PDO::FETCH_ASSOC);
     }
-
     public static function getUserById($id)
     {
-        return self::request("SELECT * FROM user WHERE id= $id")->fetch(PDO::FETCH_ASSOC);
+        $query = "SELECT * FROM user WHERE id = :id";
+        $params = ['id' => $id];
+        return self::prepareAndExecute($query, $params)->fetch(PDO::FETCH_ASSOC);
     }
-
     public static function insertIntoDb(User $user)
     {
-        return self::request("INSERT INTO user(name, firstname, password, mail) VALUES ('" . $user->getName() . "', '" . $user->getFirstname() . "', '" . $user->getPassword() . "', '" . $user->getMail() . "')");
+        $query = "INSERT INTO user (name, firstname, password, mail) VALUES (:name, :firstname, :password, :mail)";
+        $params = [
+            'name' => $user->getName(),
+            'firstname' => $user->getFirstname(),
+            'password' => $user->getPassword(),
+            'mail' => $user->getMail()
+        ];
+        return self::prepareAndExecute($query, $params);
     }
 }
 ?>

@@ -1,26 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <title>Login</title>
+    <title>Social_Network_Login</title>
 </head>
+
 <body>
-    <h2>Login</h2>
-    <form action="" method="post">
-        <div>
-            <label for="email">Username:</label>
-            <input type="text" id="email" name="email" placeholder="enter your email">
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required placeholder="enter your password">
-        </div>
-        <div>
-            <button type="submit" name="submit">Login</button>
-            <button> <a href="http://localhost:8000/register">Register</a></button>
-        </div>
-    </form>
+    <header>
+        <h1>The Social Network</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Login</h2>
+            <form method="POST">
+                <input type="email" placeholder="Mail" name="mail">
+                <?php if (isset ($errorUserIntoDB)) {
+                    echo "<p>" . $errorUserIntoDB . "</p>";
+                } ?>
+                <input type="text" placeholder="Mot de passe" name="password">
+                <?php if (isset ($errorPasswordIntoDB)) {
+                    echo "<p>" . $errorPasswordIntoDB . "</p>";
+                } ?>
+                <button type="submit" name="login">Login</button>
+            </form>
+            <a href="/register">S'inscrire</a>
+        </section>
+    </main>
 </body>
+
 </html>

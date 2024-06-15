@@ -15,7 +15,7 @@ class MainController extends Controller {
         $posts = Post::getPosts();
 
         // Inclut la vue
-        require("../views/main.php");
+        require("../views/homePage.php");
     }
 }
 
